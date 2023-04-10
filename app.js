@@ -4,6 +4,14 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv").config();
+//mongoose connection to mongodb
+const mongoose = require("mongoose");
+var mongooseOptions = {
+  dbName: "ecomm-context",
+};
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions)
+  .then(() => console.log('MONGODB Conneceted!'))
+  .catch((err) => console.log(err));
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users/users");
