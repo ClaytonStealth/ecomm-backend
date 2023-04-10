@@ -1,4 +1,5 @@
 const User = require("../model/User");
+const { errorHandler } = require("./userHelper");
 
 module.exports = {
   login: async (req, res) => {
@@ -22,6 +23,13 @@ module.exports = {
   },
   register: async (req, res) => {
     try {
+      let foundUser = await User.findOne({ username: req.body.username });
+      if (foundUser) {
+        throw {
+          status: 409,
+          message: "Username already exists",
+        }
+      }
       let newUser = await new User({
         username: req.body.username,
         password: req.body.password,
@@ -33,9 +41,9 @@ module.exports = {
         userObj: savedUser,
       });
     } catch (e) {
-      console.log(e);
-      res.status(409).json({
-        message: e,
+      let errorMessage = await errorHandler(e);
+      res.status(errorMessage.status).json({
+        message: errorMessage.message,
       });
     }
   },
