@@ -14,5 +14,6 @@ router.get("/login-test", function (req, res, next) {
 });
 router.post("/login", userController.login);
 router.post("/register", userController.register);
+router.post("/delete-user", userController.deleteUser);
 
 module.exports = router;

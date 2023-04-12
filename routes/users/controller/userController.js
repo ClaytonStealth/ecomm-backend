@@ -65,4 +65,25 @@ module.exports = {
       });
     }
   },
+  deleteUser: async (req, res) => {
+    try {
+      console.log(req.body); //req.body = {username: 'stealth'}
+      let deletedUser = await User.deleteOne(req.body);
+      if (deletedUser.deletedCount > 0) {
+        res.status(200).json({
+          message: "User Deleted",
+        });
+      } else {
+        throw {
+          status: 404,
+          message: "User not deleted",
+        };
+      }
+    } catch (e) {
+      let errorMessage = await errorHandler(e);
+      res.status(errorMessage.status).json({
+        message: errorMessage.message,
+      });
+    }
+  },
 };
