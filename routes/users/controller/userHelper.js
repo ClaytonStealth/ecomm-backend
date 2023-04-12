@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../model/User");
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
 
 const createUser = async (user) => {
   let newUser = await new User({
@@ -25,10 +26,21 @@ const errorHandler = async (err) => {
     message: err.message,
   };
 };
+const createJWTToken = async (foundUser) => {
+  let payload = {
+    id: foundUser._id,
+    username: foundUser.username,
+  };
+  let token = await jwt.sign(payload, process.env.JWT_SECRET_KEY, {
+    expiresIn: 5 * 60,
+  });
+  return token;
+};
 
 module.exports = {
   createUser,
   hashPassword,
   comparePassword,
   errorHandler,
+  createJWTToken,
 };

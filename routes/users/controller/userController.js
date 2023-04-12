@@ -4,6 +4,7 @@ const {
   hashPassword,
   errorHandler,
   comparePassword,
+  createJWTToken,
 } = require("./userHelper");
 
 module.exports = {
@@ -29,10 +30,13 @@ module.exports = {
           message: "Password is incorrect",
         };
       }
+      //jwt
+      let token = await createJWTToken(foundUser); //////////////////////////////////
       // console.log(newUser);
       res.status(200).json({
         message: "POST request from controller",
         userObj: foundUser,
+        token: token,
       });
     } catch (e) {
       let errorMessage = await errorHandler(e);
