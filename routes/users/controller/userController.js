@@ -56,7 +56,7 @@ module.exports = {
       //password hash
       let hashedPassword = await hashPassword(newUser.password);
       newUser.password = hashedPassword;
-      // console.log(newUser);
+      console.log(newUser);
       let savedUser = await newUser.save();
       res.status(200).json({
         message: "Registered",
