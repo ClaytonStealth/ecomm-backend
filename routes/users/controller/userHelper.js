@@ -35,7 +35,7 @@ const createJWTToken = async (foundUser) => {
     username: foundUser.username,
   };
   let token = await jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-    expiresIn: 5 * 60,
+    expiresIn: 10 * 60,
   });
   return token;
 };

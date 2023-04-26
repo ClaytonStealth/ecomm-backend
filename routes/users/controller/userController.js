@@ -91,4 +91,22 @@ module.exports = {
       });
     }
   },
+  authtoken: async (req, res) => {
+    try {
+      let foundUser = await User.findById(req.decoded.id);
+      console.log(foundUser);
+      if (!foundUser) {
+        throw {
+          status: 404,
+          message: "Username does not exists!",
+        };
+      }
+      res.status(200).json(foundUser);
+    } catch (e) {
+      let errorMessage = await errorHandler(e);
+      res.status(errorMessage.status).json({
+        message: errorMessage.message,
+      });
+    }
+  },
 };

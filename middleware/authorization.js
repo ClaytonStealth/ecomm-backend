@@ -15,7 +15,7 @@ const verifyToken = async (req, res, next) => {
           message: "Token Expired",
         };
       }
-       req.decoded = decoded;
+      req.decoded = decoded;
 
       next();
     } else {
@@ -26,7 +26,7 @@ const verifyToken = async (req, res, next) => {
     }
   } catch (e) {
     // let errorMessage = await errorHandler(e);
-    res.status(403).json("not auth");
+    res.status(403).json("invalid token");
   }
   // req.user = decoded;
   // next();
